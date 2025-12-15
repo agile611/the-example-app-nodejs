@@ -58,6 +58,18 @@ Step 3: Run the Docker container locally:
 docker run -p 3000:3000 -d the-example-app.nodejs
 ```
 
+## Jenkins integration
+
+How to build in Jenkins
+
+```bash
+docker stop the-example-app
+docker rm the-example-app
+docker build -t the-example-app.nodejs .
+docker tag the-example-app.nodejs:latest the-example-app
+docker run --name the-example-app -p 3000:3000 -d the-example-app
+```
+
 ## Upload your example to Docker Hub
 
 Step 1: Log into the Docker Hub
