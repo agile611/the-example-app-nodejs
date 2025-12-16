@@ -14,6 +14,15 @@ pipeline {
      stage('Entorno despliegue'){
          steps{
             echo "Desplegando ${env.APP_NAME} en $ENVIRONMENT con fecha ${env.FECHA}"
+         
+            script{
+                if(params.ENVIRONMENT=='PROD'){
+                    echo "CUIDADO: ESTÁS TOCANDO PRODUCCIÓN"
+                } else {
+                    echo "Entorno seguro: $ENVIRONMENT"
+                }
+            }
+             
          }
      }    
      stage('Checkout código'){
