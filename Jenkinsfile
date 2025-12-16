@@ -24,4 +24,10 @@ pipeline {
          }
       }
     }
+    post {
+        always  { echo 'ALWAYS: Siempre pasa' }
+        success { echo 'SUCCESS: Pasa si hay' }
+        failure { echo 'FAILURE: Pasa si hay' }
+        aborted { echo 'ABORTED: Pasa si alguien me cancela el build a medias'}
+    }
 }
