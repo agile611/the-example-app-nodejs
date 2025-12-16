@@ -42,7 +42,7 @@ You can also run this app as a Docker container:
 Step 1: Clone the repo
 
 ```bash
-git clone https://bitbucket.org/itnove/the-example-app-nodejs.git
+git clone https://github.com/agile611/the-example-app-nodejs.git
 ```
 
 Step 2: Build the Docker image
@@ -68,6 +68,8 @@ docker build -t the-example-app.nodejs .
 docker tag the-example-app.nodejs:latest the-example-app
 docker run --name the-example-app -p 3000:3000 -d the-example-app
 ```
+
+You can also use Jenkinsfile if you want
 
 ## Upload your example to Docker Hub
 
