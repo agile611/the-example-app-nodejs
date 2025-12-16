@@ -19,7 +19,6 @@ Without any changes, this app is connected to a Contentful space with read-only 
 Clone the repo and install the dependencies.
 
 ```bash
-git clone https://github.com/contentful/the-example-app.nodejs.git
 cd the-example-app.nodejs
 ```
 
@@ -43,7 +42,7 @@ You can also run this app as a Docker container:
 Step 1: Clone the repo
 
 ```bash
-git clone https://github.com/contentful/the-example-app.nodejs.git
+git clone https://bitbucket.org/itnove/the-example-app-nodejs.git
 ```
 
 Step 2: Build the Docker image
