@@ -1,4 +1,4 @@
-## The node.js example app
+## The Example node.js example app
 
 The node.js example app teaches the very basics of how to work with Contentful:
 
