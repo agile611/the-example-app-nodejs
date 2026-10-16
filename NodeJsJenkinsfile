@@ -1,0 +1,30 @@
+pipeline {
+    agent {
+        label 'nodejs' //Debes usar el template de agente guillemhs/jenkins-alpine-agent:alpine-nodejs y ponerle el label correspondiente
+    }
+
+    stages {
+        stage('Checkout SCM') {
+            steps {
+                echo 'Checkout SCM'
+                git branch: 'master', url: 'https://github.com/agile611/the-example-app-nodejs.git'
+            }
+        }
+        
+        stage('Install content-cli') {
+            steps {
+                sh 'mkdir -p /home/jenkins/.npm-global'
+                sh 'npm config set prefix /home/jenkins/.npm-global'
+                sh 'export PATH=$PATH:/home/jenkins/.npm-global/bin'
+                sh 'npm install -g contentful-cli'
+            }
+        }
+        
+        stage('npm install') {
+            steps {
+                echo 'npm install'
+                sh 'npm install'
+            }
+        }
+    }
+}
