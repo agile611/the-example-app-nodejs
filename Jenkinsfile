@@ -7,7 +7,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Obtener el código desde el repositorio de GitHub
-                git branch: 'main', url: 'https://github.com/Gromenaware/the-example-app-nodejs.git'
+                git branch: 'master', url: 'https://github.com/Gromenaware/the-example-app-nodejs.git'
             }
         }
         
