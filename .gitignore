@@ -1,5 +1,7 @@
 # cypress test result files
 cypress
+.idea/*
+.circle/*
 
 # e2e test directory
 test/e2e
