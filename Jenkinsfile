@@ -1,26 +1,35 @@
 pipeline {
-    agent any
-    stages{
-        stage('Docker cleanup'){
+    agent {
+        label 'Agent2SSH' // Este agente necesita ejecutar Docker de forma nativa
+    }
+
+    stages {
+        stage('Checkout') {
             steps {
+                // Obtener el código desde el repositorio de GitHub
+                git branch: 'main', url: 'https://github.com/Gromenaware/the-example-app-nodejs.git'
+            }
+        }
+        
+        stage('Clean') {
+            steps {
+                // Limpiar contenedores anteriores para construir desde cero
                 sh 'docker stop the-example-app || true'
                 sh 'docker rm the-example-app || true'
             }
         }
-        stage('Checkout código'){
+        
+        stage('Build') {
             steps {
-                git 'https://github.com/agile611/the-example-app-nodejs.git'
-            }
-        }    
-        stage('Docker build'){
-            steps {
+                // Construir la imagen de Docker
                 sh 'docker build -t the-example-app.nodejs .'
-                sh 'docker tag the-example-app.nodejs:latest the-example-app'
             }
         }
-        stage('Docker Run'){
+        
+        stage('Deployment') {
             steps {
-                sh 'docker run --name the-example-app -p 3000:3000 -d the-example-app'
+                // Desplegar el contenedor con la imagen recién creada
+                sh 'docker run -p 3000:3000 --name the-example-app -d the-example-app.nodejs'
             }
         }
     }
