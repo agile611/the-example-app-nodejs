@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'Agent2SSH' // Este agente necesita ejecutar Docker de forma nativa
+        label 'NativeDocker' // Este agente necesita ejecutar Docker de forma nativa
     }
 
     stages {
