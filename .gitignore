@@ -1,4 +1,5 @@
 # cypress test result files
+.circleci/
 cypress
 .idea/*
 .circle/*
