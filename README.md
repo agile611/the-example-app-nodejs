@@ -48,13 +48,13 @@ git clone https://github.com/agile611/the-example-app-nodejs.git
 Step 2: Build the Docker image
 
 ```bash
-docker build -t the-example-app.nodejs .
+docker build -t the-example-app-nodejs .
 ```
 
 Step 3: Run the Docker container locally:
 
 ```bash
-docker run -p 3000:3000 -d the-example-app.nodejs
+docker run --name the-example-app-nodejs -p 3000:3000 -d the-example-app-nodejs
 ```
 
 ## Jenkins integration
