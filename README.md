@@ -8,7 +8,7 @@ The node.js example app teaches the very basics of how to work with Contentful:
 
 ## Requirements
 
-* Node 8
+* Node 8.9.3 (see `.nvmrc`)
 * Git
 * Contentful CLI (only for write access)
 
@@ -37,29 +37,61 @@ npm run start:dev
 Open [http://localhost:3000](http://localhost:3000) and take a look around.
 
 ## Create the Docker Container
-You can also run this app as a Docker container:
 
-Step 1: Clone the repo
+You can run this app as a Docker container using either of the two provided Dockerfiles:
 
-```bash
-git clone https://github.com/agile611/the-example-app-nodejs.git
-```
-
-Step 2: Build the Docker image
+### Option 1: Standard Dockerfile (node:alpine base)
 
 ```bash
+# Build the Docker image
 docker build -t the-example-app-nodejs .
-```
 
-Step 3: Run the Docker container locally:
-
-```bash
+# Run the Docker container locally
 docker run --name the-example-app-nodejs -p 3000:3000 -d the-example-app-nodejs
 ```
 
-## Jenkins integration
+### Option 2: Multi-architecture Dockerfile (DockerfileAlpine)
 
-How to build in Jenkins
+This Dockerfile supports building for multiple architectures:
+- `linux/386`
+- `linux/amd64`
+- `linux/arm/v6`
+- `linux/arm/v7`
+- `linux/arm64/v8`
+- `linux/ppc64le`
+- `linux/riscv64`
+- `linux/s390x`
+
+#### Build for a single architecture (local testing)
+
+```bash
+# Build for current architecture
+docker build -t the-example-app-nodejs:alpine -f DockerfileAlpine .
+
+# Run locally
+docker run --name the-example-app-nodejs-alpine -p 3000:3000 -d the-example-app-nodejs:alpine
+```
+
+#### Build for multiple architectures (requires Docker Buildx)
+
+```bash
+# Create and use a buildx builder (one-time setup)
+docker buildx create --name multiarch --use --bootstrap
+
+# Build and push for all supported architectures
+docker buildx build \
+  --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x \
+  -t your-registry/your-image:tag \
+  -f DockerfileAlpine \
+  --push \
+  .
+```
+
+> **Note:** Multi-arch builds require `--push` to a registry (Docker Hub, GHCR, etc.) as the manifest list cannot be loaded locally with `docker load`.
+
+## Jenkins Integration
+
+How to build in Jenkins using the standard Dockerfile:
 
 ```bash
 docker stop the-example-app
@@ -69,7 +101,11 @@ docker tag the-example-app.nodejs:latest the-example-app
 docker run --name the-example-app -p 3000:3000 -d the-example-app
 ```
 
-You can also use Jenkinsfile if you want
+You can also use the provided Jenkinsfiles:
+- `Jenkinsfile` - Basic pipeline
+- `JenkfinsFileWithVariables` - Pipeline with variables
+- `NodeJsJenkinsfile` - Node.js specific pipeline
+- `BuildDockerJenkinsfile` - Docker build pipeline
 
 ## Upload your example to Docker Hub
 
@@ -85,11 +121,25 @@ docker images
 
 Step 3: Tag your image accordingly with your Docker hub user
 ```bash
-docker tag bb38976d03cf yourhubusername/verse_gapminder:firsttry
+docker tag <image-id> yourhubusername/your-repo:tag
 ```
 
 Step 4: Push your image to the Docker hub
 ```bash 
-docker push yourhubusername/verse_gapminder:firsttry
+docker push yourhubusername/your-repo:tag
 ```
 
+## Dockerfile Details
+
+### Dockerfile (Standard)
+- Base: `node:alpine`
+- Uses default `node` user
+- Simple, single-architecture build
+
+### DockerfileAlpine (Multi-arch)
+- Base: `alpine:3.24`
+- Explicitly installs `nodejs` and `npm` via `apk`
+- Creates dedicated `nodejs` user (UID 1000) for security
+- Uses `npm ci --only=production` for faster, reproducible builds
+- Supports 8 architectures via Docker Buildx
+- Better layer caching with package files copied first
