@@ -8,7 +8,7 @@ The node.js example app teaches the very basics of how to work with Contentful:
 
 ## Requirements
 
-* Node 8.9.3 (see `.nvmrc`)
+* Node 20+ (see `.nvmrc`)
 * Git
 * Contentful CLI (only for write access)
 
@@ -88,6 +88,26 @@ docker buildx build \
 ```
 
 > **Note:** Multi-arch builds require `--push` to a registry (Docker Hub, GHCR, etc.) as the manifest list cannot be loaded locally with `docker load`.
+
+## Run with Docker Compose
+
+You can also run the app using Docker Compose, which builds the image from the `Dockerfile` and maps port 3000:
+
+```bash
+# Build and start the container
+docker compose up --build
+
+# Run in detached mode (background)
+docker compose up -d --build
+
+# Stop and remove containers
+docker compose down
+
+# View logs
+docker compose logs -f
+```
+
+The `docker-compose.yml` also configures `host.docker.internal` via `extra_hosts`, so the container can reach services running on your host machine (e.g. `http://host.docker.internal:3000`).
 
 ## Jenkins Integration
 
