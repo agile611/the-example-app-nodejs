@@ -1,7 +1,8 @@
 services:
   api:
-    image: guillemhs/the-example-app-nodejs:2026.10.30
+    image: guillemhs/the-example-app-nodejs:2026.10.30 
     ports:
       - "3000:3000"
-    environment:
-      - NODE_ENV=production
+    user: "node"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
