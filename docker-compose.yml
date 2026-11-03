@@ -1,0 +1,9 @@
+services:
+  api:
+    image: guillemhs/the-example-app-nodejs:2026.10.30
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - data:/app
