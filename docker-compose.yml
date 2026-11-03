@@ -1,5 +1,5 @@
 services:
-  api:
+  the-example-app-nodejs:
     image: guillemhs/the-example-app-nodejs:2026.10.30 
     ports:
       - "3000:3000"

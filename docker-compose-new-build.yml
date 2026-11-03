@@ -1,5 +1,5 @@
 services:
-  api:
+  the-example-app-nodejs:
     build:
       context: .
       dockerfile: Dockerfile
