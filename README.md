@@ -19,7 +19,7 @@ Without any changes, this app is connected to a Contentful space with read-only 
 Clone the repo and install the dependencies.
 
 ```bash
-cd the-example-app.nodejs
+cd the-example-app-nodejs
 ```
 
 ```bash
@@ -66,10 +66,10 @@ This Dockerfile supports building for multiple architectures:
 
 ```bash
 # Build for current architecture
-docker build -t the-example-app-nodejs:alpine -f DockerfileAlpine .
+docker build -t the-example-app-nodejs:alpine -f Dockerfile .
 
 # Run locally
-docker run --name the-example-app-nodejs-alpine -p 3000:3000 -d the-example-app-nodejs:alpine
+docker run --name the-example-app-nodejs-alpine -p 3000:3000 -d the-example-app-nodejs:latest
 ```
 
 #### Build for multiple architectures (requires Docker Buildx)
@@ -82,7 +82,6 @@ docker buildx create --name multiarch --use --bootstrap
 docker buildx build \
   --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x \
   -t your-registry/your-image:tag \
-  -f DockerfileAlpine \
   --push \
   .
 ```
@@ -116,8 +115,8 @@ How to build in Jenkins using the standard Dockerfile:
 ```bash
 docker stop the-example-app
 docker rm the-example-app
-docker build -t the-example-app.nodejs .
-docker tag the-example-app.nodejs:latest the-example-app
+docker build -t the-example-app-nodejs .
+docker tag the-example-app-nodejs:latest the-example-app
 docker run --name the-example-app -p 3000:3000 -d the-example-app
 ```
 
