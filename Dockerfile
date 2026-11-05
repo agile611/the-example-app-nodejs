@@ -7,7 +7,7 @@ FROM alpine:3.24
 WORKDIR /app
 
 # Install Node.js and npm (available on all target architectures in Alpine 3.24)
-RUN apk add --no-cache nodejs=22* npm && \
+RUN apk add --no-cache nodejs npm && \
     npm install -g npm@11
 
 # Install contentful-cli globally
